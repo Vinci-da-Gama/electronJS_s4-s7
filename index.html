@@ -1,36 +1,134 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="script-src 'self' 'unsafe-inline'"
+    />
     <title>Hello World!</title>
     <style>
-      html { font-family: sans-serif; background: #2B2E3B; color: #9FEAF9; }
-      a { color: white; }
+      html {
+        font-family: sans-serif;
+        background: #2b2e3b;
+        color: #9feaf9;
+      }
+      a {
+        color: white;
+      }
     </style>
   </head>
   <body>
-
+    <p>S4_renderer_process_API</p>
     <h3><a href="#" onclick="newWin()">New Window</a></h3>
     <h3><a href="#" onclick="closeWin()">Close Window</a></h3>
     <h3><a href="#" onclick="styleWin()">Bad Fonts</a></h3>
+    <br />
+    <img src="https://placekitten.com/450/300" alt="" />
+    <br />
+    <button type="button" onclick="zoomIn()">Increase Zoom</button>
+    <button type="button" onclick="zoomOut()">Decrease Zoom</button>
+    <button type="button" onclick="zoomReset()">Reset Zoom</button>
+    <br />
+    <img width="100%" id="screenshot1" src="" alt="screenshot_1" />
+    <br />
+    <button type="button" id="screenshot-button">Get Screenshot</button>
+    <p>END S4_renderer_process_API</p>
+    <p>S5_IPC_Communication</p>
+    <cite>IPC --> inter process communication</cite>
+    <br />
+    <button type="button" id="talk">Talk to main process from IPC</button>
+    <br />
+    <button type="button" id="sync-talk">ipc sync talk</button>
+    <br />
+    <button type="button" id="ask">Pick a fruit</button>
+    <p>END S5_IPC_Communication</p>
+    <p>S6_Shared_API</p>
+    <button type="button" onclick="process.hang()">
+      Process Hang Renderer
+    </button>
+    <br />
+    <button type="button" onclick="process.crash()">Process Crash</button>
+    <br />
+    <button type="button" onclick="shellFuncs.showSite()">
+      Open ElectronJs org Site
+    </button>
+    <br />
+    <button type="button" onclick="shellFuncs.openSplish()">
+      Open Splish.png
+    </button>
+    <br />
+    <button type="button" onclick="shellFuncs.showSplishFile()">
+      show Splish.png
+    </button>
+    <br />
+    <button type="button" onclick="shellFuncs.delSplishFile()">
+      delete Splish.png
+    </button>
+    <br />
+    <b>Convert Splash.png:</b>
+    <br />
+    <button type="button" onclick="toPng()">to Png</button>
+    <button type="button" onclick="toJpg()">to Jpg</button>
+    <button type="button" onclick="showImg()">show Image</button>
+    <br />
+    <img src="" id="previewSplash" alt="previewSplash_image" />
+    <br />
+    <p>END S6_Shared_API</p>
+    <p>S7_IPC_Communication</p>
+    <p>END S7_IPC_Communication</p>
 
     <script>
-
-      let win
+      let win;
 
       const newWin = () => {
-        win = window.open('https://developer.mozilla.org', '_blank', 'width=500,height=450,alwaysOnTop=1')
-      }
+        win = window.open(
+          "https://developer.mozilla.org",
+          "_blank",
+          "width=500,height=450,alwaysOnTop=1"
+        );
+      };
 
       const closeWin = () => {
-        win.close()
-      }
+        win.close();
+      };
 
       const styleWin = () => {
-        win.eval("document.getElementsByTagName('h1')[0].style.fontFamily = 'Comic Sans MS'")
-      }
+        win.eval(
+          "document.getElementsByTagName('h1')[0].style.fontFamily = 'Comic Sans MS'"
+        );
+      };
 
+      const { webFrame } = require("electron");
+
+      const zoomIn = () => {
+        webFrame.setZoomFactor(webFrame.getZoomFactor() + 1);
+      };
+
+      const zoomOut = () => {
+        webFrame.setZoomFactor(webFrame.getZoomFactor() - 1);
+      };
+
+      const zoomReset = () => {
+        webFrame.setZoomFactor(1);
+      };
+
+      console.log(
+        "88 -- webFrame.getResourceUsage: ",
+        webFrame.getResourceUsage()
+      );
+
+      console.log("92 -- renerer -- process.type", process.type);
+      // for process.hand()
+      /* let i = 1;
+      setInterval(() => {
+        console.log("98 -- i is: ", i);
+        i++;
+      }, 1000); */
+
+      require("./renderer.js");
+      const shellFuncs = require("./shellCmds.js");
+      const { toPng, toJpg, showImg } = require("./nativeImgs.js");
     </script>
   </body>
 </html>
