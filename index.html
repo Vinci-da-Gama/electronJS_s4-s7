@@ -86,6 +86,26 @@
     <br />
     <p>END S6_Shared_API</p>
     <p>S7_IPC_Communication</p>
+    <h2>App is: <u id="browserOnOffLineStatus"></u></h2>
+    <br />
+    <p>
+      using nodejs
+      <script>
+        document.write(haPreloadSet.node);
+      </script>
+      and electron
+      <script>
+        document.write(haPreloadSet.electron);
+      </script>
+      .
+    </p>
+    <br />
+    <textarea id="content" rows="8" cols="80"></textarea>
+    <br />
+    <button id="saveTextBtn" type="button" onclick="saveContent()">
+      save content
+    </button>
+    <br />
     <p>END S7_IPC_Communication</p>
 
     <script>
@@ -109,7 +129,7 @@
         );
       };
 
-      const { webFrame } = require("electron");
+      const { webFrame, remote } = require("electron");
 
       const zoomIn = () => {
         webFrame.setZoomFactor(webFrame.getZoomFactor() + 1);
@@ -124,11 +144,11 @@
       };
 
       console.log(
-        "123 -- webFrame.getResourceUsage: ",
+        "129 -- webFrame.getResourceUsage: ",
         webFrame.getResourceUsage()
       );
 
-      console.log("127 -- renerer -- process.type", process.type);
+      console.log("133 -- renerer -- process.type", process.type);
       // for process.hand()
       /* let i = 1;
       setInterval(() => {
@@ -140,6 +160,23 @@
       const shellFuncs = require("./shellCmds.js");
       const { toPng, toJpg, showImg } = require("./nativeImgs.js");
       const { makeUppercase, showClipboardImg } = require("./clipboard.js");
+      require("./onoffline_notification.js");
+
+      const currWin = remote.getCurrentWindow();
+      setTimeout(() => {
+        const notification = new Notification("Electron App", {
+          body: "Some Notification info",
+        });
+        notification.onclick = () => {
+          if (!currWin.isVisible()) {
+            currWin.show();
+          }
+        };
+      }, 2000);
+
+      const saveContent = () => {
+        writeToFile(document.getElementById("content").value);
+      };
     </script>
   </body>
 </html>
