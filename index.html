@@ -74,6 +74,16 @@
     <br />
     <img src="" id="previewSplash" alt="previewSplash_image" />
     <br />
+    <button type="button" onclick="makeUppercase()">
+      Make clipboard uppcase
+    </button>
+    <br />
+    <button type="button" onclick="showClipboardImg()">
+      Show clipboard image
+    </button>
+    <br />
+    <img src="" id="imgInClipboard" alt="imgInClipboard_image" />
+    <br />
     <p>END S6_Shared_API</p>
     <p>S7_IPC_Communication</p>
     <p>END S7_IPC_Communication</p>
@@ -114,11 +124,11 @@
       };
 
       console.log(
-        "88 -- webFrame.getResourceUsage: ",
+        "123 -- webFrame.getResourceUsage: ",
         webFrame.getResourceUsage()
       );
 
-      console.log("92 -- renerer -- process.type", process.type);
+      console.log("127 -- renerer -- process.type", process.type);
       // for process.hand()
       /* let i = 1;
       setInterval(() => {
@@ -129,6 +139,7 @@
       require("./renderer.js");
       const shellFuncs = require("./shellCmds.js");
       const { toPng, toJpg, showImg } = require("./nativeImgs.js");
+      const { makeUppercase, showClipboardImg } = require("./clipboard.js");
     </script>
   </body>
 </html>

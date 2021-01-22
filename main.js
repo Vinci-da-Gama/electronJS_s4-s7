@@ -1,5 +1,5 @@
 // Modules
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, clipboard } = require("electron");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -30,6 +30,9 @@ ipcMain.handle("desktop-path-channel", () => app.getPath("desktop"));
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
+  clipboard.writeText("Hello from main process...");
+  console.log("34 -- text in clip board: ", clipboard.readText());
+
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
